@@ -247,10 +247,6 @@ int rt_hw_bme280_init(const char *name, struct rt_sensor_config *cfg)
     {
         return -1;
     }
-    module->sen[0] = sensor_baro;
-    module->sen[1] = sensor_temp;
-    module->sen[2] = sensor_humi;
-    module->sen_num = 3;
 
     /*  barometric pressure sensor register */
     {
@@ -270,8 +266,10 @@ int rt_hw_bme280_init(const char *name, struct rt_sensor_config *cfg)
         rt_memcpy(&sensor_baro->config, cfg, sizeof(struct rt_sensor_config));
         sensor_baro->ops = &sensor_ops;
         sensor_baro->module = module;
+        module->sen[0] = sensor_baro;
+        module->sen_num++;
         
-        result = rt_hw_sensor_register(sensor_baro, name, RT_DEVICE_FLAG_RDWR, RT_NULL);
+        result = rt_hw_sensor_register(sensor_baro, name, RT_DEVICE_FLAG_RDONLY, RT_NULL);
         if (result != RT_EOK)
         {
             LOG_E("device register err code: %d", result);
@@ -289,15 +287,17 @@ int rt_hw_bme280_init(const char *name, struct rt_sensor_config *cfg)
         sensor_temp->info.model      = "bme280_temp";
         sensor_temp->info.unit       = RT_SENSOR_UNIT_DCELSIUS;
         sensor_temp->info.intf_type  = RT_SENSOR_INTF_I2C;
-        sensor_baro->info.range_max  = 850;
-        sensor_baro->info.range_min  = -400;
+        sensor_temp->info.range_max  = 850;
+        sensor_temp->info.range_min  = -400;
         sensor_temp->info.period_min = 100;
 
         rt_memcpy(&sensor_temp->config, cfg, sizeof(struct rt_sensor_config));
         sensor_temp->ops = &sensor_ops;
         sensor_temp->module = module;
+        module->sen[1] = sensor_temp;
+        module->sen_num++;
         
-        result = rt_hw_sensor_register(sensor_temp, name, RT_DEVICE_FLAG_RDWR, RT_NULL);
+        result = rt_hw_sensor_register(sensor_temp, name, RT_DEVICE_FLAG_RDONLY, RT_NULL);
         if (result != RT_EOK)
         {
             LOG_E("device register err code: %d", result);
@@ -315,15 +315,17 @@ int rt_hw_bme280_init(const char *name, struct rt_sensor_config *cfg)
         sensor_humi->info.model      = "bme280_humi";
         sensor_humi->info.unit       = RT_SENSOR_UNIT_PERMILLAGE;
         sensor_humi->info.intf_type  = RT_SENSOR_INTF_I2C;
-        sensor_baro->info.range_max  = 1000;
-        sensor_baro->info.range_min  = 0;
+        sensor_humi->info.range_max  = 1000;
+        sensor_humi->info.range_min  = 0;
         sensor_humi->info.period_min = 100;
 
         rt_memcpy(&sensor_humi->config, cfg, sizeof(struct rt_sensor_config));
         sensor_humi->ops = &sensor_ops;
         sensor_humi->module = module;
+        module->sen[2] = sensor_humi;
+        module->sen_num++;
         
-        result = rt_hw_sensor_register(sensor_humi, name, RT_DEVICE_FLAG_RDWR, RT_NULL);
+        result = rt_hw_sensor_register(sensor_humi, name, RT_DEVICE_FLAG_RDONLY, RT_NULL);
         if (result != RT_EOK)
         {
             LOG_E("device register err code: %d", result);
