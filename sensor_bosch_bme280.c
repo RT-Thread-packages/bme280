@@ -269,7 +269,7 @@ int rt_hw_bme280_init(const char *name, struct rt_sensor_config *cfg)
         module->sen[0] = sensor_baro;
         module->sen_num++;
         
-        result = rt_hw_sensor_register(sensor_baro, name, RT_DEVICE_FLAG_RDWR, RT_NULL);
+        result = rt_hw_sensor_register(sensor_baro, name, RT_DEVICE_FLAG_RDONLY, RT_NULL);
         if (result != RT_EOK)
         {
             LOG_E("device register err code: %d", result);
@@ -297,7 +297,7 @@ int rt_hw_bme280_init(const char *name, struct rt_sensor_config *cfg)
         module->sen[1] = sensor_temp;
         module->sen_num++;
         
-        result = rt_hw_sensor_register(sensor_temp, name, RT_DEVICE_FLAG_RDWR, RT_NULL);
+        result = rt_hw_sensor_register(sensor_temp, name, RT_DEVICE_FLAG_RDONLY, RT_NULL);
         if (result != RT_EOK)
         {
             LOG_E("device register err code: %d", result);
@@ -325,7 +325,7 @@ int rt_hw_bme280_init(const char *name, struct rt_sensor_config *cfg)
         module->sen[2] = sensor_humi;
         module->sen_num++;
         
-        result = rt_hw_sensor_register(sensor_humi, name, RT_DEVICE_FLAG_RDWR, RT_NULL);
+        result = rt_hw_sensor_register(sensor_humi, name, RT_DEVICE_FLAG_RDONLY, RT_NULL);
         if (result != RT_EOK)
         {
             LOG_E("device register err code: %d", result);
