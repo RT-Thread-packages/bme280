@@ -287,8 +287,8 @@ int rt_hw_bme280_init(const char *name, struct rt_sensor_config *cfg)
         sensor_temp->info.model      = "bme280_temp";
         sensor_temp->info.unit       = RT_SENSOR_UNIT_DCELSIUS;
         sensor_temp->info.intf_type  = RT_SENSOR_INTF_I2C;
-        sensor_baro->info.range_max  = 850;
-        sensor_baro->info.range_min  = -400;
+        sensor_temp->info.range_max  = 850;
+        sensor_temp->info.range_min  = -400;
         sensor_temp->info.period_min = 100;
 
         rt_memcpy(&sensor_temp->config, cfg, sizeof(struct rt_sensor_config));
@@ -315,8 +315,8 @@ int rt_hw_bme280_init(const char *name, struct rt_sensor_config *cfg)
         sensor_humi->info.model      = "bme280_humi";
         sensor_humi->info.unit       = RT_SENSOR_UNIT_PERMILLAGE;
         sensor_humi->info.intf_type  = RT_SENSOR_INTF_I2C;
-        sensor_baro->info.range_max  = 1000;
-        sensor_baro->info.range_min  = 0;
+        sensor_humi->info.range_max  = 1000;
+        sensor_humi->info.range_min  = 0;
         sensor_humi->info.period_min = 100;
 
         rt_memcpy(&sensor_humi->config, cfg, sizeof(struct rt_sensor_config));
