@@ -247,10 +247,6 @@ int rt_hw_bme280_init(const char *name, struct rt_sensor_config *cfg)
     {
         return -1;
     }
-    module->sen[0] = sensor_baro;
-    module->sen[1] = sensor_temp;
-    module->sen[2] = sensor_humi;
-    module->sen_num = 3;
 
     /*  barometric pressure sensor register */
     {
@@ -270,6 +266,8 @@ int rt_hw_bme280_init(const char *name, struct rt_sensor_config *cfg)
         rt_memcpy(&sensor_baro->config, cfg, sizeof(struct rt_sensor_config));
         sensor_baro->ops = &sensor_ops;
         sensor_baro->module = module;
+        module->sen[0] = sensor_baro;
+        module->sen_num++;
         
         result = rt_hw_sensor_register(sensor_baro, name, RT_DEVICE_FLAG_RDWR, RT_NULL);
         if (result != RT_EOK)
@@ -296,6 +294,8 @@ int rt_hw_bme280_init(const char *name, struct rt_sensor_config *cfg)
         rt_memcpy(&sensor_temp->config, cfg, sizeof(struct rt_sensor_config));
         sensor_temp->ops = &sensor_ops;
         sensor_temp->module = module;
+        module->sen[1] = sensor_temp;
+        module->sen_num++;
         
         result = rt_hw_sensor_register(sensor_temp, name, RT_DEVICE_FLAG_RDWR, RT_NULL);
         if (result != RT_EOK)
@@ -322,6 +322,8 @@ int rt_hw_bme280_init(const char *name, struct rt_sensor_config *cfg)
         rt_memcpy(&sensor_humi->config, cfg, sizeof(struct rt_sensor_config));
         sensor_humi->ops = &sensor_ops;
         sensor_humi->module = module;
+        module->sen[2] = sensor_humi;
+        module->sen_num++;
         
         result = rt_hw_sensor_register(sensor_humi, name, RT_DEVICE_FLAG_RDWR, RT_NULL);
         if (result != RT_EOK)
